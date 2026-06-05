@@ -38,6 +38,21 @@ public class BlogController {
         return "blog-view";
     }
 
+    @PostMapping("/blog/delete/{id}")
+    public String deleteBlog(@PathVariable String id,
+                             HttpSession session) {
+
+        User user = (User) session.getAttribute("usuario");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        blogService.deleteBlog(id);
+
+        return "redirect:/user";
+    }
+
     // Mostrar form
     @GetMapping("/blog/create")
     public String showCreateForm(HttpSession session, Model model) {

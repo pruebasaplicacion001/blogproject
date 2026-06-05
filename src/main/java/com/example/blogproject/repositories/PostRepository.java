@@ -16,4 +16,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
     // para panel (paginado)
     Page<Post> findByBlogIdOrderByCreatedAtDesc(String blogId, Pageable pageable);
 
+    void deleteByBlogId(String blogId);
+
 }
