@@ -72,6 +72,7 @@
             </div>
 
         </div>
+        <div th:if="${blog != null}">
 
             <h2 class="text-2xl font-bold mb-4 text-gray-800">
                 Tu Blog
@@ -83,19 +84,30 @@
 
             <div class="flex gap-4">
 
-                <!--  VER el BLOG -->
                 <a th:href="@{'/blog/' + ${blog.id}}"
                    class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                     Ver blog
                 </a>
 
-                <!-- Crear nueva entrada -->
                 <a th:href="@{/post/new(blogId=${blog.id})}"
                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                     Crear entrada
                 </a>
 
             </div>
+
+        </div>
+
+        <div th:if="${blog == null}">
+
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                Aún no tienes un blog
+            </h2>
+
+            <a href="/blog/create"
+               class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                Crear Blog
+            </a>
 
         </div>
 
