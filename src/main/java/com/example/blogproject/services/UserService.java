@@ -19,14 +19,24 @@ public class UserService {
     }
 
     public User login(String username, String password) {
-        User user = userRepository.findByUsername(username).orElse(null);
 
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        }
+    System.out.println("Username recibido: " + username);
 
-        return null;
+    User user = userRepository.findByUsername(username).orElse(null);
+
+    System.out.println("Usuario encontrado: " + (user != null));
+
+    if (user != null) {
+        System.out.println("Password BD: [" + user.getPassword() + "]");
+        System.out.println("Password recibida: [" + password + "]");
     }
+
+    if (user != null && user.getPassword().equals(password)) {
+        return user;
+    }
+
+    return null;
+}
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
