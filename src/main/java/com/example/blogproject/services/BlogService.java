@@ -11,6 +11,8 @@ public class BlogService {
 
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
     private PostRepository postRepository;
 
     public void save(Blog blog) {
