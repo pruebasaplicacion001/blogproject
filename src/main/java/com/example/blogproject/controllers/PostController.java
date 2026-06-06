@@ -58,7 +58,29 @@ public class PostController {
                         .path("erotica")
                         .asDouble();
 
-                if (erotica >= 0.40) {
+                double firearm = root.path("weapon")
+                        .path("classes")
+                        .path("firearm")
+                        .asDouble();
+
+                double drugs = root.path("recreational_drug")
+                        .path("prob")
+                        .asDouble();
+
+                double alcohol = root.path("alcohol")
+                        .path("prob")
+                        .asDouble();
+
+                double violence = root.path("violence")
+                        .path("prob")
+                        .asDouble();
+
+                if (erotica >= 0.4 ||
+                        firearm >= 0.4 ||
+                        drugs >= 0.4 ||
+                        alcohol >= 0.4 ||
+                        violence >= 0.4) {
+
                     return "redirect:/post/new?blogId=" + blogId + "&error=image_not_allowed";
                 }
 
