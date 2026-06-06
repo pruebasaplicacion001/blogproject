@@ -44,8 +44,12 @@ public class PostController {
         if (imageUrl != null && !imageUrl.isBlank()) {
 
             String resultado = moderationService.checkImage(imageUrl);
-
+            System.out.println("Respuesta Sightengine:");
             System.out.println(resultado);
+            if (resultado.contains("\"erotica\": 0.99")) {
+                return "redirect:/post/new?error=image_not_allowed";
+            }
+
         }
 
         Post post = new Post();
