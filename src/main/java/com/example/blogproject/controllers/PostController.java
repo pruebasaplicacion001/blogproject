@@ -4,6 +4,7 @@ import com.example.blogproject.models.Blog;
 import com.example.blogproject.models.Post;
 import com.example.blogproject.models.User;
 import com.example.blogproject.services.BlogService;
+import com.example.blogproject.services.ModerationService;
 import com.example.blogproject.services.PostService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private ModerationService moderationService;
+
     @GetMapping("/post/new")
     public String newPostForm(@RequestParam String blogId, Model model) {
         model.addAttribute("blogId", blogId);
@@ -36,6 +40,13 @@ public class PostController {
             @RequestParam(required = false) String imageUrl,
             @RequestParam(required = false) String imageCaption
     ) {
+
+        if (imageUrl != null && !imageUrl.isBlank()) {
+
+            String resultado = moderationService.checkImage(imageUrl);
+
+            System.out.println(resultado);
+        }
 
         Post post = new Post();
         post.setBlogId(blogId);
