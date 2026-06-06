@@ -6,6 +6,8 @@ import com.example.blogproject.models.User;
 import com.example.blogproject.services.BlogService;
 import com.example.blogproject.services.ModerationService;
 import com.example.blogproject.services.PostService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,12 +46,25 @@ public class PostController {
         if (imageUrl != null && !imageUrl.isBlank()) {
 
             String resultado = moderationService.checkImage(imageUrl);
+
             System.out.println("Respuesta Sightengine:");
             System.out.println(resultado);
-            if (resultado.contains("\"erotica\": 0.99")) {
-                return "redirect:/post/new?error=image_not_allowed";
-            }
 
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(resultado);
+
+                double erotica = root.path("nudity")
+                        .path("erotica")
+                        .asDouble();
+
+                if (erotica >= 0.40) {
+                    return "redirect:/post/new?blogId=" + blogId + "&error=image_not_allowed";
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         Post post = new Post();

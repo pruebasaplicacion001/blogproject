@@ -21,7 +21,8 @@ public class ModerationService {
 
         String url =
                 "https://api.sightengine.com/1.0/check.json"
-                        + "?models=nudity-2.1,self-harm,violence,gore-2.0"
+                        + "?models=nudity-2.1,weapon,alcohol,recreational_drug,"
+                        + "tobacco,violence,self-harm,gore-2.0,gambling"
                         + "&api_user=" + apiUser
                         + "&api_secret=" + apiSecret
                         + "&url=" + imageUrl;
